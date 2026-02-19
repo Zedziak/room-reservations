@@ -1,0 +1,44 @@
+﻿@model IEnumerable<RAI_Lab2.Models.Reservation> 
+@{
+    ViewData["Title"] = "Moje Rezerwacje";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (!Model.Any())
+{
+    <p>Nie masz żadnych nadchodzących rezerwacji.</p>
+}
+else
+{
+    <p>
+        <a asp-action="ExportMyBookings" class="btn btn-success">Eksportuj do iCalendar (.ics)</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Salka</th>
+                <th>Od</th>
+                <th>Do</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reservation in Model)
+            {
+                <tr>
+                    <td>@reservation.room.name</td>
+                    <td>@reservation.startTime.ToString("g")</td>
+                    <td>@reservation.endTime.ToString("g")</td>
+                    <td>
+                        <form asp-action="Cancel" method="post">
+                            <input type="hidden" name="id" value="@reservation.Id" />
+                            <button type="submit" class="btn btn-warning btn-sm">Anuluj</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

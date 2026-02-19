@@ -1,0 +1,52 @@
+﻿@model RAI_Lab2.Models.ReservationForm;
+@{
+    ViewData["Title"] = "Kalendarz Rezerwacji";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="d-flex align-items-center mb-3">
+    <label for="datepicker" class="form-label me-2">Wybierz dzień:</label>
+    <input type="date" id="datepicker" class="form-control" style="width: 200px;" />
+</div>
+
+<div id="calendar-container" class="table-responsive">
+    <p>Ładowanie kalendarza...</p>
+</div>
+
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookingModalLabel">Zarezerwuj Salkę</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="bookingForm">
+                    <input type="hidden" id="roomId" />
+                    <div class="mb-3">
+                        <label>Salka:</label>
+                        <strong id="roomName"></strong>
+                    </div>
+                    <div class="mb-3">
+                        <label for="startTime" class="form-label">Czas rozpoczęcia:</label>
+                        <input type="datetime-local" id="startTime" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="endTime" class="form-label">Czas zakończenia:</label>
+                        <input type="datetime-local" id="endTime" class="form-control" required />
+                    </div>
+                    <div id="modalError" class="text-danger"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                <button type="button" class="btn btn-primary" id="saveBookingBtn">Zarezerwuj</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/calendar.js"></script>
+}

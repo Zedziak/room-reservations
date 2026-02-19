@@ -1,0 +1,65 @@
+﻿@model RAI_Lab2.Models.ManageRooms;
+@{
+    ViewData["Title"] = "Zarządzanie Salami";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Dodaj nową salkę</h3>
+        <form asp-action="Manage" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-2">
+                <label asp-for="newRoomName" class="control-label"></label>
+                <input asp-for="newRoomName" class="form-control" />
+                <span asp-validation-for="newRoomName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="newRoomSize" class="control-label"></label>
+                <input asp-for="newRoomSize" class="form-control" type="number" />
+                <span asp-validation-for="newRoomSize" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Dodaj</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <h3>Istniejące salki</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Pojemność</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var room in Model.existingRooms)
+                {
+                    <tr>
+                        <td>@room.name</td>
+                        <td>@room.size</td>
+                        <td>
+                            <form asp-action="Delete" method="post" onsubmit="return confirm('Czy na pewno chcesz usunąć salkę @room.name?');">
+                                <input type="hidden" name="id" value="@room.id" />
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger btn-sm">Usuń</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

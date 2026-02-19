@@ -1,0 +1,27 @@
+﻿@model IEnumerable<RAI_Lab2.Models.User>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">RAI Lab 2</h1>
+    <p>Wybierz użytkownika, aby się zalogować:</p>
+
+    <div class="list-group">
+        @foreach (var user in Model)
+        {
+            <a asp-controller="Account"
+               asp-action="Login"
+               asp-route-login="@user.login"
+               class="list-group-item list-group-item-action">
+                Zaloguj jako: <strong>@user.login</strong>
+                @if (user.isAdmin)
+                {
+                    <span class="badge bg-danger">Admin</span>
+                }
+            </a>
+        }
+    </div>
+
+    <hr />
+</div>
